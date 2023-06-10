@@ -1,0 +1,108 @@
+{% include "header.html" %}
+<div class="search-page">
+    <div class="container_">
+        <h1>Search</h1>
+        
+        <form method="post">
+          <div class="form-group">
+            <label for="product-type">Product Type:</label>
+            <select class="form-control" id="type">
+              <option value="fertilizer">Fertilizer</option>
+              <option value="pesticide">Pesticide</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="brand">Brand:</label>
+            <select class="form-control" id="brand">
+              <!-- Populate dynamic choices using backend logic -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="sub-type">Sub-Type:</label>
+            <select class="form-control" id="sub-type">
+              <!-- Populate dynamic choices using backend logic -->
+            </select>
+          </div>
+          <button type="button" class="btn btn-success form-control" id="search-btn">Search</button>
+        </form>
+    
+        <!-- Search Results Table -->
+        <h2>Search Results</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Quantity (in Kg)</th>
+              <th>Price per unit (INR)</th>
+            </tr>
+          </thead>
+          <tbody id="search-results">
+            <!-- Search results will be dynamically populated here -->
+          </tbody>
+        </table>
+      </div>
+</div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <script>
+    type_select = document.getElementById("type");
+    sub_type_select = document.getElementById("sub-type");
+    brand_select = document.getElementById("brand");
+
+
+    type_select.onchange = function(){
+        type = type_select.value;
+        
+        fetch('/' + type).then(function(response){
+                response.json().then(function(data) {
+                    option_brand_HTML = '';
+                    option_type_HTML = '';
+                    for(br of data[1]['brand']){
+                    option_brand_HTML += '<option>' + br + '</option>'
+                    }
+                    for(s_t of data[0]['sub_type']){
+                    option_type_HTML += '<option>' + s_t + '</option>'
+                    }
+                    sub_type_select.innerHTML = option_type_HTML;
+                    brand_select.innerHTML = option_brand_HTML;
+                    }
+                )
+                }
+            )
+        }
+
+    // Event listener for search button click
+    document.getElementById('search-btn').addEventListener('click', function() {
+      var productType = document.getElementById('type').value;
+      var brand = document.getElementById('brand').value;
+      var subType = document.getElementById('sub-type').value;
+
+
+      fetch('/' + type + '/' + brand + '/' + subType).then(function(response){
+                response.json().then(function(data) {
+                  var searchResults = data;
+                  var searchResultsContainer = document.getElementById('search-results');
+                  searchResultsContainer.innerHTML = '';
+
+                  var row = document.createElement('tr');
+
+                  var quantityCell = document.createElement('td');
+                  var priceCell = document.createElement('td');
+
+                  quantityCell.textContent = searchResults['quantity'];
+                  priceCell.textContent = searchResults['price'];
+
+                  row.appendChild(quantityCell);
+                  row.appendChild(priceCell);
+
+                  searchResultsContainer.appendChild(row);
+                    }
+                    )
+                    }
+                )
+                }
+            )
+  </script>
+{% include "footer.html" %}

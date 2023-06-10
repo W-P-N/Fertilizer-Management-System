@@ -1,0 +1,71 @@
+{% include "header.html" %}
+<div class="add-db-div">
+    <div class="container_">
+        <!-- Add Form -->
+        <h2>Add Product</h2>
+        <form id="add-form" method="post">
+          {{ form.csrf_token }}
+          <div class="form-group">
+            {{ form.product_type.label }}
+            {{ form.product_type(class="form-control", id="type")}}
+          </div>
+          <div class="form-group">
+            {{ form.brand.label }}
+            {{ form.brand(class="form-control", id="brand")}}
+          </div>
+          <div class="form-group">
+            {{ form.sub_type.label }}
+            {{ form.sub_type(class="form-control", id="sub_type")}}
+          </div>
+          <div class="form-group">
+            {{ form.quantity.label }}
+            {{ form.quantity(class="form-control")}}
+          </div>
+          <div class="form-group">
+            {{ form.add(class="btn btn-success form-control")}}
+          </div>
+        </form>
+      </div>
+      {% block content %}
+      <div class="container_">
+          {% for message in get_flashed_messages() %}
+          <div class="message_" id="message">
+              <h2>{{ message }}</h2>
+          </div>
+          {% endfor %}
+      </div>
+      {% endblock %}
+    </div>
+
+<script src="jquery-3.6.4.min.js"></script>
+<script>
+
+    type_select = document.getElementById("type");
+
+    sub_type_select = document.getElementById("sub_type");
+    brand_select = document.getElementById("brand");
+    
+
+    type_select.onchange = function(){
+        type = type_select.value;
+        
+        fetch('/' + type).then(function(response){
+                response.json().then(function(data) {
+                    option_brand_HTML = '';
+                    option_type_HTML = '';
+                    for(br of data[1]['brand']){
+                      option_brand_HTML += '<option>' + br + '</option>'
+                    }
+                    for(s_t of data[0]['sub_type']){
+                      option_type_HTML += '<option>' + s_t + '</option>'
+                    }
+                    sub_type_select.innerHTML = option_type_HTML;
+                    brand_select.innerHTML = option_brand_HTML;
+                    }
+                )
+                }
+            )
+          }
+
+</script>
+{% include "footer.html" %}

@@ -1,0 +1,13 @@
+{% include "header.html" %}
+{% if user_logged_in: %}
+<div class="adm-dashboard">
+    <div class="container_">
+        <h1>Admin Dashboard</h1>
+        <div class="dashboard-buttons">
+          <a href="{{ url_for('billing_system') }}" class="btn btn-success">Billing System</a>
+          <a href="{{ url_for('inventory') }}" class="btn btn-success">Inventory</a>
+        </div>
+      </div>
+</div>
+  {% endif %}
+{% include "footer.html" %}

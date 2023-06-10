@@ -1,0 +1,121 @@
+body {
+    padding: 50px;
+    background-image: url('../img/img_3.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+.navbar-nav .nav-item .nav-link, .navbar-nav .active .nav-link
+{
+    color: #F6FFDE;
+    padding: 0 20px;
+}
+.navbar-nav .nav-item .nav-link:hover
+{
+    color: #7df2c1;
+}
+.navbar {
+    padding: 50px;
+    color: black;
+}
+.navbar-brand, .nav-link {
+    color: #7AA874;
+}
+.nav-container
+{
+    font-size: 20px;
+}
+.container_ {
+    background-color: #AAC8A7;
+    padding: 30px;
+    border-radius: 5px;
+    opacity: 0.9;
+}
+footer {
+    color: #F6FFDE;
+    text-align: center;
+    padding: 10px;
+}
+.container-footer
+{
+    padding: 20px;
+    font-size: 25px;
+}
+.welcome
+{
+    margin-top: 100px;
+    padding:50px 100px;
+}
+.admin-signin
+{
+    margin-top: 100px;
+    padding: 50px;
+    margin-right: 50px;
+}
+.signintitle
+{
+    color: #41644A;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    padding-top: 60px;
+}
+.dashboard-buttons {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+.dashboard-buttons .btn {
+    width: 45%;
+    height: 80px;
+    font-size: 24px;
+}
+
+.adm-dashboard
+{
+    margin-top: 100px;
+    padding: 50px 150px;
+    text-align: center;
+}
+
+.billing-sys
+{
+    margin-top: 100px;
+    padding: 100px 150px;
+}
+
+#pdf-btn
+{
+    align-self: right;
+}
+
+.add-db-div
+{
+    padding: 100px 150px;
+}
+.message
+{
+    padding: 10px;
+}
+.db-ops
+{
+    padding: 100px;
+    margin-top: 100px;
+}
+.db-ops .btn{
+    display: inline-block;
+    width: 45%;
+    height: 80px;
+    font-size: 24px;
+    padding: 25px;
+}
+.add-to-db, .search-db, .remove-from-db
+{
+    padding: 10px;
+}
+.search-page
+{
+    margin-top: 100px;
+    padding: 150px;
+}

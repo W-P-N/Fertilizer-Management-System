@@ -1,0 +1,28 @@
+{% include "header.html" %}
+  <div class="container container_ welcome">
+    <h1 style="color: #263A29; text-align: center;">Welcome to the Fertilizer Management System</h1>
+  </div>
+
+  <section id="about" class="container container_ mt-4">
+    <h2 style="color: #263A29; text-align: center;">About</h2>
+    <p>
+      The Fertilizer Management System is a web-based application designed to simplify and streamline the management of fertilizers for agriculture and gardening purposes. With this application, users can efficiently track and monitor their fertilizer usage, ensuring optimal plant nutrition and promoting sustainable farming practices.
+    </p>
+    <p>
+      The application provides a user-friendly interface where farmers, gardeners, and agricultural professionals can record details of various fertilizers, including type, quantity, and application dates. Users can also generate comprehensive reports to analyze their fertilizer usage patterns and make informed decisions for crop yield improvement.
+    </p>
+    <p>
+      In addition to fertilizer management, the system offers features such as customizable reminders and notifications to ensure timely application, reducing the risk of over or under fertilization. Users can also access educational resources and guidelines related to fertilization practices, helping them make informed choices for their specific crop or garden requirements.
+    </p>
+    <p>
+      The Fertilizer Management System aims to enhance productivity, reduce environmental impact, and promote sustainable agriculture practices by providing users with an intuitive platform to efficiently manage and optimize their fertilizer usage. It is designed to be user-friendly, reliable, and adaptable to various farming and gardening scenarios, empowering users to achieve optimal plant health and maximize their crop yields.
+    </p>
+  </section>
+  {% if not current_user.is_authenticated: %}
+  <section id="admin-login" class="container container_ mt-4">
+    <a href="{{ url_for('admin_signin') }}" class="btn btn-success btn-lg btn-block">Admin Login</a>
+  </section>
+  {% endif %}
+
+
+{% include "footer.html" %}

@@ -1,0 +1,32 @@
+{% include "header.html" %}
+<div class="container_ admin-signin">
+    <div class="row">
+        <div class="col-lg-8 signintitle">
+            <h1>Admin Sign In</h1>
+        </div>
+        <div class="col-lg-4">
+            <form method="post">
+                {{ form.csrf_token }}
+              <div class="form-group">
+                {{ form.email.label }}
+                {{ form.email(class="form-control") }}
+              </div>
+              <div class="form-group">
+                {{ form.password.label }}
+                {{ form.password(class="form-control") }}
+              </div>
+              {{ form.signin(class="btn btn-success") }}
+            </form>
+            {% block content %}
+            <div class="container_">
+                  {% for message in get_flashed_messages() %}
+                  <div class="message_" id="message">
+                      <h2>{{ message }}</h2>
+                  </div>
+                  {% endfor %}
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+  </div>
+{% include "footer.html" %}

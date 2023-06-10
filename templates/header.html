@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fertilizer Management System</title>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/styles/styles.css">
+  <link rel="shortcut icon" href="../static/img/favicon.ico">
+  <script src="https://kit.fontawesome.com/00a5c407e7.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container nav-container">
+      <a class="navbar-brand" href="#"><h2>F.M.S</h2></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          {% if user_logged_in: %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('home') }}"><b>Home</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin_dashboard') }}"><b>Dashboard</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout') }}"><b>Logout</b></a>
+          </li>
+          {% else: %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('home') }}"><b>Home</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about"><b>About</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#admin-login"><b>Admin</b></a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

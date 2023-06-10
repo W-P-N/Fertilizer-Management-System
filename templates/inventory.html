@@ -1,0 +1,13 @@
+{% include "header.html" %}
+<div class="db-ops">
+  <div class="container_">
+    <div class="add-to-db">
+      <a href="{{ url_for('add_to_db_') }}" class="btn btn-success">Add to database</a>
+    </div>
+    <div class="search-db">
+      <a href="{{ url_for('search_in_db') }}" class="btn btn-success">Search in database</a>
+    </div>
+  </div>
+</div>
+
+{% include "footer.html" %}

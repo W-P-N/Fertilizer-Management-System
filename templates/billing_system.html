@@ -1,0 +1,175 @@
+{% include "header.html" %}
+<div class="billing-sys">
+  <div class="container_">
+    <h1>Billing System</h1>
+    <form>
+      <div class="form-group">
+        <label for="product-type">Product Type:</label>
+        <select class="form-control" id="product-type">
+          <option value="fertilizer">Fertilizer</option>
+          <option value="pesticide">Pesticide</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="brand">Brand:</label>
+        <select class="form-control" id="brand">
+          <!-- Populate dynamic choices using backend logic -->
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="sub-type">Sub-Type:</label>
+        <select class="form-control" id="sub-type">
+          <!-- Populate dynamic choices using backend logic -->
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity (in kg):</label>
+        <input type="number" class="form-control" id="quantity" step="0.01" required>
+      </div>
+      <button type="button" class="btn btn-success" id="add-btn">Add</button>
+    </form>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product Type</th>
+          <th>Brand</th>
+          <th>Sub-Type</th>
+          <th>Quantity</th>
+          <th>Price per kg</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody id="bill-items">
+      </tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="3">Total:</td>
+          <td id="total-price">0</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <button type="button" class="btn btn-success" onclick="refr()" id="pdf-btn">Checkout</button>
+
+    {% block content %}
+      <div class="container_">
+          {% for message in get_flashed_messages() %}
+          <div class="message_" id="message">
+              <h2>{{ message }}</h2>
+          </div>
+          {% endfor %}
+      </div>
+      {% endblock %}
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    function refr()
+    {
+      $("#bill-items tr").remove(); 
+      var total = parseFloat(document.getElementById('total-price').textContent);
+      total = 0;
+      document.getElementById('total-price').textContent = total.toFixed(2);
+      
+      alert("Thank you for shopping.");
+    };
+
+
+    function remove_row(ind, q, p, st, br, t)
+    {
+      var table = document.getElementById("bill-items");
+      table.deleteRow(ind.rowIndex);
+
+      fetch('/add-back/' + q + '/' + st + '/' + br + '/' + t).then(function(response){
+          console.log();
+        }
+      );
+
+      var total = parseFloat(document.getElementById('total-price').textContent);
+      total -= q*p;
+      document.getElementById('total-price').textContent = total.toFixed(2);
+    };
+
+    document.getElementById('add-btn').addEventListener('click', function() {
+
+      var productType = document.getElementById('product-type').value;
+      var brand = document.getElementById('brand').value;
+      var subType = document.getElementById('sub-type').value;
+      var quantity = parseFloat(document.getElementById('quantity').value).toFixed(2);
+      var price = 0;
+
+      fetch('/get_price/' + type + '/' + brand + '/' + subType + '/' + quantity).then(function(response){
+                response.json().then(function(data) {
+                  console.log(data);
+                  if (data.length == 0)
+                  {
+                    alert("Material insufficient.");
+                    return 0;
+                  }
+                  price = data['price'];
+
+                  var row = document.createElement('tr');
+                  var icn = document.createElement('a');
+                  icn.id = "trash";
+                  icn.innerText = ``;
+                  icn.href = "remove_row()"
+
+                  row.innerHTML = `
+                    <td>${productType}</td>
+                    <td>${brand}</td>
+                    <td>${subType}</td>
+                    <td>${quantity}</td>
+                    <td>${price}</td>
+                    <td><button onclick="remove_row(this, ${quantity}, ${price}, '${subType}', '${brand}', '${productType}')" id="trash" class="btn btn-success"><i class="fa-solid fa-trash"></button></td>
+                  `;
+                  var tableBody = document.getElementById('bill-items');
+                  tableBody.appendChild(row);
+
+                  var total = parseFloat(document.getElementById('total-price').textContent);
+                  total += price*parseFloat(quantity);
+                  document.getElementById('total-price').textContent = total.toFixed(2);
+                  
+                  // Clear input fields
+                  document.getElementById('brand').value = '';
+                  document.getElementById('quantity').value = '';
+                  document.getElementById('sub-type').value = '';
+                }
+                  
+              )
+      }
+      )
+
+    });
+
+    type_select = document.getElementById("product-type");
+    sub_type_select = document.getElementById("sub-type");
+    brand_select = document.getElementById("brand");
+
+
+    type_select.onchange = function(){
+        type = type_select.value;
+        
+        fetch('/' + type).then(function(response){
+                response.json().then(function(data) {
+                    option_brand_HTML = '';
+                    option_type_HTML = '';
+                    for(br of data[1]['brand']){
+                    option_brand_HTML += '<option>' + br + '</option>'
+                    }
+                    for(s_t of data[0]['sub_type']){
+                    option_type_HTML += '<option>' + s_t + '</option>'
+                    }
+                    sub_type_select.innerHTML = option_type_HTML;
+                    brand_select.innerHTML = option_brand_HTML;
+                    }
+                )
+                }
+            )
+        }
+
+  </script>
+</div>
+{% include "footer.html" %}
